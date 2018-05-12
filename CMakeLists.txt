@@ -3,4 +3,4 @@ project(linkedlist)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(linkedlist main.cpp List.hpp)
+add_executable(linkedlist main.cpp Node.hpp List.hpp)

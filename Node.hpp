@@ -7,33 +7,28 @@ template<class T>
 class Node {
 public:
     Node(
-            const T &val,
+            const T &value,
             std::shared_ptr<Node<T>> left = nullptr,
             std::shared_ptr<Node<T>> right = nullptr
     ) :
-            val(val),
+            value(value),
             left(left),
             right(right) {}
 
-    inline void setLeft(std::shared_ptr<Node<T>> left) noexcept {
-        this->left = left;
-    }
-    inline void setRight(std::shared_ptr<Node<T>> right) noexcept {
-        this->right = right;
-    }
+    inline void setLeft(std::shared_ptr<Node<T>> left) noexcept {this->left = left;}
+    inline void setRight(std::shared_ptr<Node<T>> right) noexcept {this->right = right;}
 
-    inline std::shared_ptr<Node<T>> getLeft() noexcept {
-        return left;
-    }
-    inline std::shared_ptr<Node<T>> getRight() noexcept{
-        return right;
-    }
+    inline std::shared_ptr<Node<T>> getLeft() noexcept {return left;}
+    inline std::shared_ptr<Node<T>> getRight() noexcept{return right;}
 
+    const T& getValue() noexcept{return value;}
+    void setValue(const T& value){this->value = value;}
+    
 private:
+    T value;
     std::shared_ptr<Node<T>>
             left{nullptr},
             right{nullptr};
-    T val;
 };
 
 #endif

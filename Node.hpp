@@ -15,19 +15,25 @@ public:
             left(left),
             right(right) {}
 
+    inline void setLeft(std::shared_ptr<Node<T>> left) noexcept {
+        this->left = left;
+    }
+    inline void setRight(std::shared_ptr<Node<T>> right) noexcept {
+        this->right = right;
+    }
+
+    inline std::shared_ptr<Node<T>> getLeft() noexcept {
+        return left;
+    }
+    inline std::shared_ptr<Node<T>> getRight() noexcept{
+        return right;
+    }
+
 private:
     std::shared_ptr<Node<T>>
             left{nullptr},
             right{nullptr};
     T val;
-
-    inline void setLeft(std::shared_ptr<Node<T>> left) noexcept {
-        this->left = left;
-    }
-
-    inline void setRight(std::shared_ptr<Node<T>> right) noexcept {
-        this->right = right;
-    }
 };
 
 #endif

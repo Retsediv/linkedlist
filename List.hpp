@@ -8,25 +8,29 @@ template <class T>
 class List {
 private:
     size_t size_;
-    Node<T>* tail_, head_;
+    std::shared_ptr<Node<T>> tail_, head_;
 
-//    class ListIterator {
-//
-//    };
 public:
     void List(): size_(0), tail_(nullptr), head_(nullptr){};
 
-    void List(size_t size, const T& val): size_(size){
-//        for (int i = 0; i < size; ++i) {
-//            head_ = new Node<T>(val);
-//        }
-    }
 
-//    void push_back(const T& val);
+    void push_back(const T& val);
 //
 //    void pop();
 //
 //    void remove(size_t index);
 };
+
+template<class T>
+void List<T>::push_back(const T &val) {
+    if(tail_ == nullptr){
+        tail_ = new Node(val);
+        head_ = tail_;
+    } else {
+        auto tmp = new Node(val, head_);
+        (*head_).setRight(tmp);
+        head_ = tmp;
+    }
+}
 
 #endif

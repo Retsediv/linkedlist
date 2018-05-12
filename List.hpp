@@ -4,48 +4,63 @@
 #include <cstdio>
 #include "Node.hpp"
 
-template <class T>
+template<class T>
 class List {
 private:
-    class ListIterator : public std::iterator<std::forward_iterator_tag, Node> {
-    private:
-        std::shared_ptr<Node> p_;
-    public:
-        ListIterator(): p_(nullptr){};
-        explicit ListIterator(Node* p): p_(p){};
-        explicit ListIterator(const ListIterator& li): p_(li.p_){};
+    size_t size_;
+    std::shared_ptr<const Node<T>> tail_, head_;
 
-        ListIterator& operator++() {
+public:
+    typedef T value_type;
+    typedef ptrdiff_t difference_type;
+    typedef T* pointer;
+    typedef T& reference ;
+    typedef std::bidirectional_iterator_tag iterator_category ;
+
+    class ListIterator {
+    private:
+        const std::shared_ptr<const Node<T>> p_;
+    public:
+        ListIterator(std::shared_ptr<const Node<T>> p): p_(p){};
+
+        ListIterator& operator++(){
             p_ = p_->getRight();
             return *this;
         }
 
-        ListIterator operator++(int) {
+        ListIterator operator++(int){
             ListIterator tmp(*this);
             operator++();
             return tmp;
         }
+
+        ListIterator& operator--(){
+            p_ = p_->getLeft();
+            return *this;
+        }
+
+        ListIterator operator--(int){
+            ListIterator tmp(*this);
+            operator--();
+            return tmp;
+        }
+
+        bool operator==(const ListIterator& rhs) const {
+            return p_ == rhs.p_;
+        }
+
+        bool operator!=(const ListIterator& rhs) const {
+            return p_ != rhs.p_;
+        }
+
+        T&operator*() const {
+            return *p_;
+        };
     };
 
-    size_t size_;
-    ListIterator tail_, head_;
+//    List() : size_(0), tail_(new Node(nullptr)), head_(new Node(nullptr)) {};
 
-    public:
-    List(): size_(0), tail_(nullptr), head_(nullptr){};
-
-    void push_back(const T& val);
+//    void push_back(const T& val);
 };
-
-//template<class T>
-//void List<T>::push_back(const T &val) {
-//    if(tail_ == nullptr){
-//        tail_ = new Node(val);
-//        head_ = tail_;
-//    } else {
-//        auto tmp = new Node(val, head_);
-//        (*head_).setRight(tmp);
-//        head_ = tmp;
-//    }
-//}
 
 #endif

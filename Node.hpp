@@ -6,29 +6,32 @@
 template<class T>
 class Node {
 public:
-    Node(
-            const T &value,
-            std::shared_ptr<const Node<T>> left = nullptr,
-            std::shared_ptr<const Node<T>> right = nullptr
-    ) :
-            value(value),
-            left(left),
-            right(right) {}
+    explicit Node(const T &value, Node<T>* left = nullptr, Node<T>* right = nullptr ) : value(value), left(left), right(right) {}
 
-    inline void setLeft(std::shared_ptr<const Node<T>> left) noexcept {this->left = left;}
-    inline void setRight(std::shared_ptr<const Node<T>> right) noexcept {this->right = right;}
+    inline void setLeft(Node<T>* l) noexcept { left = l; }
+    inline void setRight(Node<T>* r) noexcept { right = r; }
 
-    inline std::shared_ptr<const Node<T>> getLeft() const noexcept {return left;}
-    inline std::shared_ptr<const Node<T>> getRight() const noexcept{return right;}
+    inline Node<T>* getLeft() {return left;}
+    inline Node<T>* getRight() {return right;}
+
+    virtual bool is_guard(){
+        return false;
+    }
 
     const T& getValue() const noexcept {return value;}
     void setValue(const T& value){this->value = value;}
-    
 private:
     T value;
-    std::shared_ptr<const Node<T>>
-            left{nullptr},
-            right{nullptr};
+    Node<T>* left{nullptr};
+    Node<T>* right{nullptr};
+};
+
+template <class T>
+class GuardNode : public Node<T> {
+public:
+    GuardNode() : Node<T>(T(), nullptr, nullptr) {}
+
+    bool is_guard() override { return true; }
 };
 
 #endif

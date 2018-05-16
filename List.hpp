@@ -3,64 +3,72 @@
 
 #include <cstdio>
 #include "Node.hpp"
+#include "exception.h"
+#include "ListIterator.hpp"
+
 
 template<class T>
 class List {
 private:
     size_t size_;
-    std::shared_ptr<const Node<T>> tail_, head_;
+    Node<T> *tail_;
+    Node<T> *head_;
 
 public:
-    typedef T value_type;
-    typedef ptrdiff_t difference_type;
-    typedef T* pointer;
-    typedef T& reference ;
-    typedef std::bidirectional_iterator_tag iterator_category ;
+    List() : size_(0), tail_(nullptr), head_(new GuardNode<T>()) {};
 
-    class ListIterator {
-    private:
-        const std::shared_ptr<const Node<T>> p_;
-    public:
-        ListIterator(std::shared_ptr<const Node<T>> p): p_(p){};
+    inline size_t getSize() const { return size_; };
 
-        ListIterator& operator++(){
-            p_ = p_->getRight();
-            return *this;
-        }
+    inline Node<T> *getTail() const { return tail_; };
 
-        ListIterator operator++(int){
-            ListIterator tmp(*this);
-            operator++();
-            return tmp;
-        }
+    inline Node<T> *getHead() const { return head_; };
 
-        ListIterator& operator--(){
-            p_ = p_->getLeft();
-            return *this;
-        }
+    inline ListIterator<T> begin() noexcept { return ListIterator<T>(tail_); }
 
-        ListIterator operator--(int){
-            ListIterator tmp(*this);
-            operator--();
-            return tmp;
-        }
+    inline ListIterator<T> end() noexcept { return ListIterator<T>(head_); }
 
-        bool operator==(const ListIterator& rhs) const {
-            return p_ == rhs.p_;
-        }
+    std::reverse_iterator<T> rbegin() noexcept { return std::reverse_iterator<T>(end()); };
 
-        bool operator!=(const ListIterator& rhs) const {
-            return p_ != rhs.p_;
-        }
+    std::reverse_iterator<T> rend() noexcept { return std::reverse_iterator<T>(begin()); };
 
-        T&operator*() const {
-            return *p_;
-        };
-    };
+    ListIterator<T> next(ListIterator<T> &iterator, size_t n);
 
-//    List() : size_(0), tail_(new Node(nullptr)), head_(new Node(nullptr)) {};
+    ListIterator<T> prev(ListIterator<T> &iterator, size_t n);
 
-//    void push_back(const T& val);
+    void push_back(const T &val);
 };
+
+template<class T>
+void List<T>::push_back(const T &val) {
+    auto el = new Node<T>(val);
+
+    if (tail_ == nullptr) {
+        tail_ = el;
+        el->setRight(head_);
+        head_->setLeft(el);
+    } else {
+        auto prev = head_->getLeft();
+        prev->setRight(el);
+        el->setLeft(prev);
+        el->setRight(head_->getRight());
+        head_->setLeft(el);
+    }
+
+    ++size_;
+}
+
+template<class T>
+ListIterator<T> List<T>::next(ListIterator<T> &iterator, size_t n) {
+    ListIterator<T> new_iter{iterator};
+    new_iter.next(n);
+    return new_iter;
+}
+
+template<class T>
+ListIterator<T> List<T>::prev(ListIterator<T> &iterator, size_t n) {
+    ListIterator<T> new_iter{iterator};
+    new_iter.prev(n);
+    return new_iter;
+}
 
 #endif

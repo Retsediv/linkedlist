@@ -21,12 +21,12 @@ public:
     }
 
     ListIterator &operator++() {
-        if(!p_->getRight()->is_guard()){
+//        if(!p_->getRight()->is_guard()){
             p_ = p_->getRight();
             return *this;
-        }
+//        }
 
-        throw OutOfBoundException();
+//        throw OutOfBoundException();
     }
 
     ListIterator operator++(int) {

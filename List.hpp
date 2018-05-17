@@ -40,18 +40,18 @@ public:
 
 template<class T>
 void List<T>::push_back(const T &val) {
-    auto el = new Node<T>(val);
+    auto * new_node = new Node<T>{val};
 
     if (tail_ == nullptr) {
-        tail_ = el;
-        el->setRight(head_);
-        head_->setLeft(el);
+        tail_ = new_node;
+        new_node->setRight(head_);
+        head_->setLeft(new_node);
     } else {
         auto prev = head_->getLeft();
-        prev->setRight(el);
-        el->setLeft(prev);
-        el->setRight(head_->getRight());
-        head_->setLeft(el);
+        prev->setRight(new_node);
+        new_node->setLeft(prev);
+        new_node->setRight(head_->getRight());
+        head_->setLeft(new_node);
     }
 
     ++size_;

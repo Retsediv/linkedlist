@@ -1,6 +1,12 @@
 #include <gtest/gtest.h>
 #include "../../List.hpp"
 
+TEST(List, construct){
+    List<int> l;
+
+    EXPECT_EQ(0, l.getSize());
+}
+
 TEST(List, basicPush) {
     List<int> l;
 

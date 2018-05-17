@@ -10,7 +10,7 @@ TEST(List, construct){
 TEST(List, basicPush) {
     List<int> l;
 
-    EXPECT_EQ(nullptr, l.getTail());
+    EXPECT_EQ(nullptr, l.getHead());
     EXPECT_EQ(0, l.getSize());
 
     l.push_back(9);

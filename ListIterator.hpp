@@ -13,6 +13,7 @@ public:
     typedef std::bidirectional_iterator_tag iterator_category;
 
     explicit ListIterator(Node<T>* p) : p_(p) {}
+    explicit ListIterator(const Node<T>* p) : p_(p) {}
 
     ListIterator &operator=(const ListIterator<T> &rhs) noexcept {
         p_ = rhs.p_;
@@ -49,11 +50,11 @@ public:
         return tmp;
     }
 
-    bool operator==(const ListIterator &rhs) const {
+    bool operator==(const ListIterator<T> &rhs) const {
         return p_ == rhs.p_;
     }
 
-    bool operator!=(const ListIterator &rhs) const {
+    bool operator!=(const ListIterator<T> &rhs) const {
         return p_ != rhs.p_;
     }
 

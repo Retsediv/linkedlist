@@ -19,20 +19,20 @@ int main() {
 //    cout << l.begin().getPointer() - l.end().getPointer() << endl;
 //    cout << l.end().getPointer() - l.end().getPointer() << endl;
 
-    cout << l.begin().getPointer() << endl;
-    cout << l.end().getPointer() << endl;
+//    cout << l.begin().getPointer() << endl;
+//    cout << l.end().getPointer() << endl;
+//
+//    cout << (++l.begin()).getPointer() << endl;
+//    cout << (l.begin()).getPointer()->getRight() << endl;
+//
+//    cout << (++(++l.begin())).getPointer() << endl;
+//    cout << (l.begin()).getPointer()->getRight()->getRight() << endl;
+//
+//    cout << (++(++(++l.begin()))).getPointer() << endl;
+//    cout << (l.begin()).getPointer()->getRight()->getRight()->getRight() << endl;
 
-    cout << (++l.begin()).getPointer() << endl;
-    cout << (l.begin()).getPointer()->getRight() << endl;
 
-    cout << (++(++l.begin())).getPointer() << endl;
-    cout << (l.begin()).getPointer()->getRight()->getRight() << endl;
-
-    cout << (++(++(++l.begin()))).getPointer() << endl;
-    cout << (l.begin()).getPointer()->getRight()->getRight()->getRight() << endl;
-
-
-    std::cout << distance(l.begin(), l.end()) << std::endl;
-    std::cout << distance(v.begin(), v.end()) << std::endl;
+    cout << distance(l.begin(), l.end()) << endl;
+//    cout << distance(v.begin(), v.end()) << endl;
     return 0;
 }

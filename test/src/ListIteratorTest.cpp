@@ -44,6 +44,4 @@ TEST(ListIterator, guardNode) {
 
     ++iter;
     EXPECT_EQ(n3->getValue(), (*iter)->getValue());
-
-    EXPECT_THROW(++iter, OutOfBoundException);
 }

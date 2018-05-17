@@ -32,8 +32,7 @@ int main() {
     cout << (l.begin()).getPointer()->getRight()->getRight()->getRight() << endl;
 
 
-//    std::cout << distance(l.begin(), l.end()) << std::endl;
-//    std::cout << distance(v.begin(), v.end()) << std::endl;
-//    std::cout << distance(l.end(), --l.begin()) << std::endl;
+    std::cout << distance(l.begin(), l.end()) << std::endl;
+    std::cout << distance(v.begin(), v.end()) << std::endl;
     return 0;
 }

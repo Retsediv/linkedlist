@@ -21,11 +21,10 @@ public:
     }
 
     ListIterator &operator++() {
-//        if(!p_->getRight()->is_guard()){
+//        if(p_->getRight() != nullptr){
             p_ = p_->getRight();
             return *this;
 //        }
-
 //        throw OutOfBoundException();
     }
 
@@ -36,12 +35,12 @@ public:
     }
 
     ListIterator &operator--() {
-        if(p_->getLeft() != nullptr){
+//        if(p_->getLeft() != nullptr){
             p_ = p_->getLeft();
             return *this;
-        }
-
-        throw OutOfBoundException();
+//        }
+//
+//        throw OutOfBoundException();
     }
 
     ListIterator operator--(int) {

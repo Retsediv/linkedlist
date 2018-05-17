@@ -50,7 +50,7 @@ void List<T>::push_back(const T &val) {
         auto prev = head_->getLeft();
         prev->setRight(new_node);
         new_node->setLeft(prev);
-        new_node->setRight(head_->getRight());
+        new_node->setRight(head_);
         head_->setLeft(new_node);
     }
 

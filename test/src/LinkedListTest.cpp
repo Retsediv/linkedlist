@@ -1,7 +1,8 @@
 #include <gtest/gtest.h>
 #include "../../List.hpp"
+#include <algorithm>
 
-TEST(List, construct){
+TEST(List, constr1uct){
     List<int> l;
 
     EXPECT_EQ(0, l.getSize());
@@ -59,12 +60,12 @@ TEST(List, insert){
 
     int i = 1;
     for(auto const &x: l){
-        EXPECT_EQ(i, x->getValue());
+        EXPECT_EQ(i, x);
         ++i;
     }
 }
 
-TEST(List, removeByIndex){
+TEST(List, removeOneByIndex){
     List<int> l;
     l.push_back(1);
     l.push_back(2);
@@ -75,12 +76,12 @@ TEST(List, removeByIndex){
 
     int i = 1;
     for(auto const &x: l){
-        EXPECT_EQ(i, x->getValue());
+        EXPECT_EQ(i, x);
         ++i;
     }
 }
 
-TEST(List, removeByIterator){
+TEST(List, removeOneByIterator){
     List<int> l;
     l.push_back(1);
     l.push_back(2);
@@ -91,7 +92,64 @@ TEST(List, removeByIterator){
 
     int i = 1;
     for(auto const &x: l){
-        EXPECT_EQ(i, x->getValue());
+        EXPECT_EQ(i, x);
         ++i;
+    }
+}
+
+
+TEST(List, removeRangeByIndex){
+    List<int> l;
+    l.push_back(1);
+    l.push_back(3);
+    l.push_back(3);
+    l.push_back(2);
+
+    l.remove(1, 3);
+
+    EXPECT_EQ(2, l.getSize());
+
+    int i = 1;
+    for(auto const &x: l){
+        EXPECT_EQ(i, x);
+        ++i;
+    }
+}
+
+
+TEST(List, removeRangeByIterator){
+    List<int> l;
+    l.push_back(1);
+    l.push_back(3);
+    l.push_back(3);
+    l.push_back(2);
+
+    l.remove(l.begin() + 1, l.begin() + 3);
+
+    EXPECT_EQ(2, l.getSize());
+
+    int i = 1;
+    for(auto const &x: l){
+        EXPECT_EQ(i, x);
+        ++i;
+    }
+}
+
+
+TEST(List, removeIf){
+    List<int> l;
+    for (int i = 0; i < 100; ++i) {
+        l.push_back(i);
+    }
+
+    l.remove(std::remove_if(l.begin(), l.end(), [](int i){ return i % 2 == 0; }),
+             l.end());
+
+    EXPECT_EQ(50, l.getSize());
+
+    int i = 1;
+    for(auto const &x: l){
+        EXPECT_EQ(i, x);
+        i += 2;
     }
 }

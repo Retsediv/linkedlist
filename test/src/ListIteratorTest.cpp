@@ -13,14 +13,14 @@ TEST(ListIterator, simpleCase) {
 
     ListIterator<int> iter{n1};
 
-    EXPECT_EQ(n1, *iter);
-    EXPECT_EQ(n1->getValue(), (*iter)->getValue());
+    EXPECT_EQ(n1, iter.getPointer());
+    EXPECT_EQ(n1->getValue(), *iter);
 
     iter++;
-    EXPECT_EQ(n2->getValue(), (*iter)->getValue());
+    EXPECT_EQ(n2->getValue(), *iter);
 
     ++iter;
-    EXPECT_EQ(n3->getValue(), (*iter)->getValue());
+    EXPECT_EQ(n3->getValue(), *iter);
 }
 
 TEST(ListIterator, guardNode) {
@@ -36,12 +36,12 @@ TEST(ListIterator, guardNode) {
 
     ListIterator<int> iter{std::move(n1)};
 
-    EXPECT_EQ(n1, *iter);
-    EXPECT_EQ(n1->getValue(), (*iter)->getValue());
+    EXPECT_EQ(n1, iter.getPointer());
+    EXPECT_EQ(n1->getValue(), *iter);
 
     iter++;
-    EXPECT_EQ(n2->getValue(), (*iter)->getValue());
+    EXPECT_EQ(n2->getValue(), *iter);
 
     ++iter;
-    EXPECT_EQ(n3->getValue(), (*iter)->getValue());
+    EXPECT_EQ(n3->getValue(), *iter);
 }

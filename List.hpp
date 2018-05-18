@@ -21,22 +21,20 @@ public:
     typedef std::reverse_iterator<iterator> reverse_iterator;
     typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
 
-
     List() : size_(0), head_(nullptr), tail_(new GuardNode<T>()) {};
 
     inline size_t getSize() const { return size_; };
-
     inline Node<T> *getTail() const { return tail_; };
-
     inline Node<T> *getHead() const { return head_; };
 
-    inline iterator begin() noexcept { return iterator (head_); }
-    inline const_iterator cbegin() noexcept { return const_iterator(head_); }
-    inline iterator end() noexcept { return iterator (tail_); }
-    inline const_iterator cend() noexcept { return const_iterator(tail_); }
+    inline iterator begin() { return iterator (head_); }
+    inline iterator end() { return iterator (tail_); }
 
-    reverse_iterator rbegin() noexcept { return reverse_iterator(end()); };
-    reverse_iterator rend() noexcept { return reverse_iterator(begin()); };
+    inline const_iterator cbegin() { return const_iterator(head_); }
+    inline const_iterator cend() { return const_iterator(tail_); }
+
+    reverse_iterator rbegin() { return reverse_iterator(end()); };
+    reverse_iterator rend() { return reverse_iterator(begin()); };
 
     iterator next(const iterator &iterator, size_t n){
         List<T>::iterator new_iter{iterator};
@@ -126,6 +124,7 @@ public:
             Node<T> *tmp(current);
             current = current->getRight();
             tmp->~Node();
+            --size_;
         }
 
         if(left != nullptr)
@@ -133,8 +132,6 @@ public:
 
         if(right != nullptr)
             right->setLeft(left);
-
-        --size_;
 
         return iterator {current};
     }

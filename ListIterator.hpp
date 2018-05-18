@@ -4,7 +4,7 @@
 template<class T>
 class ListIterator {
 private:
-    Node<T> *p_;
+    Node<T> *data_;
 public:
     typedef T value_type;
     typedef intmax_t difference_type;
@@ -12,19 +12,17 @@ public:
     typedef T &reference;
     typedef std::bidirectional_iterator_tag iterator_category;
 
-    explicit ListIterator(Node<T> *p) : p_(p) {}
-
-    explicit ListIterator(const Node<T> *p) : p_(p) {}
+    explicit ListIterator(Node<T> *data) : data_(data) {}
+    explicit ListIterator(const Node<T> *data) : data_(data) {}
 
     ListIterator<T> &operator=(const ListIterator<T> &rhs) noexcept {
-        p_ = rhs.p_;
-
+        data_ = rhs.data_;
         return *this;
     }
 
     ListIterator<T> &operator++() {
-//        if(p_->getRight() != nullptr){
-        p_ = p_->getRight();
+//        if(data_->getRight() != nullptr){
+        data_ = data_->getRight();
         return *this;
 //        }
 //        throw OutOfBoundException();
@@ -42,8 +40,8 @@ public:
     }
 
     ListIterator<T> &operator--() {
-//        if(p_->getLeft() != nullptr){
-        p_ = p_->getLeft();
+//        if(data_->getLeft() != nullptr){
+        data_ = data_->getLeft();
         return *this;
 //        }
 //
@@ -62,15 +60,19 @@ public:
     }
 
     bool operator==(const ListIterator<T> &rhs) const {
-        return p_ == rhs.p_;
+        return data_ == rhs.data_;
     }
 
     bool operator!=(const ListIterator<T> &rhs) const {
-        return p_ != rhs.p_;
+        return data_ != rhs.data_;
     }
 
-    Node<T> *operator*() const {
-        return p_;
+    const T &operator*() const {
+        return data_->getValue();
+    };
+
+    T &operator*() {
+        return data_->getValue();
     };
 
     ListIterator<T> &next(size_t n) {
@@ -88,7 +90,7 @@ public:
     }
 
     Node<T> *getPointer() const {
-        return p_;
+        return data_;
     }
 };
 

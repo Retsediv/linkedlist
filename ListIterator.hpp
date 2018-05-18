@@ -4,7 +4,7 @@
 template<class T>
 class ListIterator {
 private:
-    Node<T>* p_;
+    Node<T> *p_;
 public:
     typedef T value_type;
     typedef intmax_t difference_type;
@@ -12,42 +12,53 @@ public:
     typedef T &reference;
     typedef std::bidirectional_iterator_tag iterator_category;
 
-    explicit ListIterator(Node<T>* p) : p_(p) {}
-    explicit ListIterator(const Node<T>* p) : p_(p) {}
+    explicit ListIterator(Node<T> *p) : p_(p) {}
 
-    ListIterator &operator=(const ListIterator<T> &rhs) noexcept {
+    explicit ListIterator(const Node<T> *p) : p_(p) {}
+
+    ListIterator<T> &operator=(const ListIterator<T> &rhs) noexcept {
         p_ = rhs.p_;
 
         return *this;
     }
 
-    ListIterator &operator++() {
+    ListIterator<T> &operator++() {
 //        if(p_->getRight() != nullptr){
-            p_ = p_->getRight();
-            return *this;
+        p_ = p_->getRight();
+        return *this;
 //        }
 //        throw OutOfBoundException();
     }
 
-    ListIterator operator++(int) {
-        ListIterator tmp(*this);
+    ListIterator<T> operator++(int) {
+        ListIterator<T> tmp(*this);
         operator++();
         return tmp;
     }
 
-    ListIterator &operator--() {
+    ListIterator<T> operator+(size_t size) const {
+        ListIterator<T> tmp(*this);
+        return tmp.next(size);
+    }
+
+    ListIterator<T> &operator--() {
 //        if(p_->getLeft() != nullptr){
-            p_ = p_->getLeft();
-            return *this;
+        p_ = p_->getLeft();
+        return *this;
 //        }
 //
 //        throw OutOfBoundException();
     }
 
-    ListIterator operator--(int) {
-        ListIterator tmp(*this);
+    ListIterator<T> operator--(int) {
+        ListIterator<T> tmp(*this);
         operator--();
         return tmp;
+    }
+
+    ListIterator<T> operator-(size_t size) const {
+        ListIterator<T> tmp(*this);
+        return tmp.prev(size);
     }
 
     bool operator==(const ListIterator<T> &rhs) const {
@@ -62,21 +73,21 @@ public:
         return p_;
     };
 
-    ListIterator& next(size_t n){
-        for (int i = 0; i < n; ++i) {
+    ListIterator<T> &next(size_t n) {
+        for (size_t i = 0; i < n; ++i) {
             operator++();
         }
         return *this;
     }
 
-    ListIterator& prev(size_t n){
-        for (int i = 0; i < n; ++i) {
+    ListIterator<T> &prev(size_t n) {
+        for (size_t i = 0; i < n; ++i) {
             operator--();
         }
         return *this;
     }
 
-    Node<T>* getPointer() const {
+    Node<T> *getPointer() const {
         return p_;
     }
 };

@@ -93,7 +93,7 @@ public:
         next->setLeft(new_node);
 
         new_node->setLeft(current_node);
-        new_node->setRight(current_node);
+        new_node->setRight(next);
 
         List<T>::iterator current{new_node};
         ++size_;
@@ -101,9 +101,19 @@ public:
         return current;
     }
 
-    iterator remove(const iterator &iterator){
-        remove(iterator, ++iterator);
+    iterator remove(size_t index){
+        return remove(begin().next(index), ++(begin().next(index)));
     }
+
+    iterator remove(const iterator &iterator){
+        auto next_node = iterator + 1;
+        return remove(iterator, next_node);
+    }
+
+    iterator remove(size_t from, size_t to) {
+        return remove(begin().next(from), begin().next(to));
+    }
+
     iterator remove(const iterator &from, const iterator &to){
         Node<T> *left = from.getPointer()->getLeft();
         Node<T> *right = to.getPointer();
@@ -115,7 +125,7 @@ public:
         while(current != right){
             Node<T> *tmp(current);
             current = current->getRight();
-            delete tmp;
+            tmp->~Node();
         }
 
         if(left != nullptr)
@@ -124,8 +134,11 @@ public:
         if(right != nullptr)
             right->setLeft(left);
 
+        --size_;
+
         return iterator {current};
     }
+
 };
 
 #endif
